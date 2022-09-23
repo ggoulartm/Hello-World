@@ -17,17 +17,12 @@ vector<string> split(const string &);
  */
 
 vector<int> circularArrayRotation(vector<int> a, int k, vector<int> queries) {
+vector<int>::iterator it;
 while(k>0){
-    int temp=a[0];
-    a[0]=a[a.size()-1];
-    int aux;
-    for(size_t i=1; i<a.size()-1; i++){
-        aux=a[i];
-        a[i]=temp;
-        temp=aux;
-    }
-    a[a.size()-1]=temp;
     k--;
+        it=a.begin();
+        a.insert(it, a[a.size()-1]);
+        a.pop_back();
 }
 for(int q=0; q<queries.size(); q++){
     queries[q]=a[queries[q]];
