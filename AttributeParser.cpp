@@ -7,56 +7,62 @@
 
 using namespace std;
 
-
 int main() {
 int n,q,i;
-string line, aux;
-map<string,string>m;
-cin>>n>>q;
+string line;
 vector<string> extract, tag;
+
+cin>>n>>q;
 cin.ignore();
+
+string aux="";
 for(i=0;i<n;i++){
     getline(cin,line);
     string ss(line);
-    int pos = ss.find("<",0);
-    int bar = ss.find("/",0);
-    if(pos != -1){
-        if(bar == -1){
-            int poso = ss.find("=", pos);
-            int poso2 = ss.find("\"",poso);
-            int posf = ss.find(">", poso);
-            int posf2=ss.find("\"",poso2+1);
-            extract.push_back(ss.substr(poso2+1,posf2));
-            extract[i].pop_back();
-            extract[i].pop_back();
-            tag.push_back(ss.substr(pos+1, pos+4)+"~"+ss.substr(pos+6,poso-7));
-        }
-        else{
-            aux=ss.substr(bar+1,bar+3);
-            vector<string>::iterator itr=tag.begin();
-            while(itr!=extract.end()){
-                int index=itr-tag.begin();
-                pos=tag[index].find(aux);
-                if(pos!=-1){
-                    for(int i=index+1; i<tag.size();i++){
-                        tag[i]=aux+"."+tag[i];
-                    }
-                    break;
-                }
-                itr++;
+        ss.pop_back();
+        ss.erase(0,1);
+    int pos = ss.find('=',0);
+    int bar = ss.find('/',0);
+    if(bar == -1){
+        ss.pop_back();
+        int e0=ss.find('\"',pos);
+        int posi = ss.find(' ',0);
+        ss.replace(posi,1,"~");
+        string tagvalue=ss.substr(0,pos-1);
+        extract.push_back(ss.substr(e0+1,ss.size()-1));
+        tag.push_back((aux+tagvalue));
+        posi = tagvalue.find('~',0);
+        
+        string::iterator iter=tagvalue.begin();
+        string tagger;
+        while(iter!=tagvalue.end()){
+            int ind=iter-tagvalue.begin();
+            if(tagvalue[ind]=='~'){
+                tagger=tagvalue.substr(0,ind);
+                break;
             }
+            iter++;
         }
+        aux=tagger+"."+aux;
+        
+    }
+    else{
+        ss.erase(0,1);
+        bar = aux.find(ss);
+        //aux.erase(bar,ss.size());
     }
 }
+
+map<string,string>m;
 for(int i=0;i<tag.size();i++){
     m.insert(pair<string,string>(tag[i],extract[i]));
 }
+
 string query;
 for(i=0;i<q;i++){
     getline(cin,query);
-    map<string,string>::iterator itr=m.find(query);
-    if(itr!=m.end()){
-        cout<<itr->second<<endl;
+    if(m[query]!=""){
+        cout<<m[query]<<endl;
     }
     else{
         cout<<"Not Found!"<<endl;
