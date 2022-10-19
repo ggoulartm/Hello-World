@@ -8,4 +8,4 @@
 		Pegar Refrigerante Meet
 		Pegar Refrigerante Etirps
 
-![Diagrama de Estados](./Diagrama de Estados.png)
+![Diagrama de Estados](https://github.com/ggoulartm/embeddedSYSTEMS/blob/C++sistemasEmbarcados/maquinaderefri/Diagrama%20de%20Estados.png?raw=true)
