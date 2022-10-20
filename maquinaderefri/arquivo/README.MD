@@ -11,15 +11,11 @@
 ![Diagrama de Estados](https://github.com/ggoulartm/embeddedSYSTEMS/blob/C++sistemasEmbarcados/maquinaderefri/Diagrama%20de%20Estados.png?raw=true)
 
 
-## Implementação
+## Problemas do Projeto
 
-A implementação deste modelo consiste em 3 arquivos:
-	fsm.cpp:
-		contém as funções da máquina de estados
+Na primeira tentativa de implementação do código utilizando polimorfismo e funções virtuais, tivemos a ideia de utilizar classes para simular os estados. 
+Ou seja, toda vez que a máquina mudasse de estado, seria chamado o destrutor de classe e declarada a variável state no estado atual.
 
-	IO.cpp
-		contém as classes referentes ao ambiente no qual o sistema embarcado irá operar
+No entanto, o problema desse tipo de implementação é que ao declarar a nova instância da classe dentro do método da outra classe, criamos um objeto local, diferente do objeto global state.
 
-	main_fsm.cpp
-		reúne os arquivos do projeto e o loop do sistema
 
