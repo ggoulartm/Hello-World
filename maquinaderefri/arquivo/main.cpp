@@ -1,7 +1,6 @@
 #include "maquinaderefri.cpp"
 
-int main()
-{
+int main(){
     S000 state;
     while(1){
     unsigned char menu;   
@@ -21,9 +20,6 @@ int main()
         }
         
     }
-    
-    
-    
     
     return 0;
 }

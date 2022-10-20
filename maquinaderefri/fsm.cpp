@@ -1,4 +1,4 @@
-#pragma
+#pragma once
 #include <iostream>
 using namespace std;
 
@@ -197,33 +197,5 @@ void get_etirps(){
     }
     else{
         cout<<"Saldo Insuficiente";
-    }
-}
-
-int main(){
-    while(1){       
-        int menu;   
-        cout<<"Selecione uma das opções:"<<endl;
-        cout<<"1) Inserir"<<endl<<"2) Devolver"<<endl<<"3) Meets"<<endl<<"4)Etirps"<<endl;
-        cout<<"Digite o código referente a opção desejada:";
-        cin>>menu;
-            switch(menu){    
-                case 1:
-                    inserir();
-                    break;
-                case 2:
-                    devolver();
-                    break;
-                case 3:
-                    get_meets();
-                    break;
-                case 4:
-                    get_etirps();
-                    break;
-                default:
-                    cout<<"menu incorreto"<<endl;
-                    break;
-                
-            }       
     }
 }
