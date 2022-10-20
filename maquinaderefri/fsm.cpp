@@ -16,6 +16,7 @@ stateNames currentState=S000;
 
 bool event=false;
 int moeda=0;
+int Saldo=0;
 
 bool event0(){
     if(moeda==25){
@@ -39,97 +40,106 @@ bool event2(){
 void runFSM(){
     switch (currentState){
     case S000:
-        cout<<"Saldo Atual R$ 0,00"<<endl;
         if(moeda==25){
             currentState=S025;
             cout<<"Saldo Atual R$ 0,25"<<endl;
+            Saldo=25;
         }
         if(moeda==50){
             currentState=S050;
             cout<<"Saldo Atual R$ 0,50"<<endl;
+            Saldo = 50;
         }
         if(moeda==100){
             currentState=S100;
             cout<<"Saldo Atual R$ 1,00"<<endl;
+            Saldo = 100;
         }
         break;
     
     case S025:
-        cout<<"Saldo Atual R$ 0,25"<<endl;
         if(moeda==25){
             currentState=S050;
             cout<<"Saldo Atual R$ 0,50"<<endl;
+            Saldo = 50;
         }
         if(moeda==50){
             currentState=S075;
             cout<<"Saldo Atual R$ 0,75"<<endl;
+            Saldo = 75;
         }
         if(moeda==100){
             currentState=S125;
             cout<<"Saldo Atual R$ 1,25"<<endl;
+            Saldo = 100;
         }
         break;
     
 
     case S050:
-        cout<<"Saldo Atual R$ 0,50"<<endl;
         if(moeda==25){
             currentState=S075;
             cout<<"Saldo Atual R$ 0,75"<<endl;
+            Saldo = 75;
         }
         if(moeda==50){
             currentState=S100;
             cout<<"Saldo Atual R$ 1,00"<<endl;
+            Saldo = 100;
         }
         if(moeda==100){
             currentState=S150;
             cout<<"Saldo Atual R$ 1,50"<<endl;
+            Saldo = 150;
         }
         break;
     
     case S075:
-        cout<<"Saldo Atual R$ 0,75"<<endl;
         if(moeda==25){
             currentState=S100;
             cout<<"Saldo Atual R$ 1,00"<<endl;
+            Saldo = 100;
         }
         if(moeda==50){
             currentState=S125;
             cout<<"Saldo Atual R$ 1,25"<<endl;
+            Saldo = 125;
         }
         if(moeda==100){
             currentState=S150;
             cout<<"Saldo Atual R$ 1,50"<<endl;
+            Saldo = 150;
         }
         break;
 
     case S100:
-        cout<<"Saldo Atual R$ 1,00"<<endl;
         if(moeda==25){
             currentState=S125;
             cout<<"Saldo Atual R$ 1,25"<<endl;
+            Saldo = 125;
         }
         if(moeda==50 || moeda==100){
             currentState=S150;
             cout<<"Saldo Atual R$ 1,50"<<endl;
+            Saldo = 150;
         }
         break;
 
 
     case S125:
-        cout<<"Saldo Atual R$ 1,25"<<endl;
         if(moeda==25 || moeda==50 || moeda==100){
             currentState=S150;
             cout<<"Saldo Atual R$ 1,50"<<endl;
+            Saldo = 150;
         }
         break;
 
 
     case S150:
-        cout<<"Saldo Atual R$ 1,50"<<endl;
         if(moeda==25 || moeda==50 || moeda==100){
             currentState=S150;
             cout<<"Saldo Atual R$ 1,50"<<endl;
+            Saldo = 150;
         }
         break;
 
@@ -139,8 +149,8 @@ void runFSM(){
     }
 }
 
-int main(){
-    while(1){
+void inserir(){
+
         cout<<"Insira uma moeda: "<<endl;
         while(!event){
             cin>>moeda;
@@ -164,5 +174,56 @@ int main(){
         moeda=0;
         event=false;
         cout<<currentState;
+}
+
+void devolver(){
+    currentState=S000;
+}
+
+void get_meets(){
+    if(Saldo==150){
+        cout<<"Pegue seu refrigerante Meets!"<<endl;
+        Saldo=0;
+    }
+    else{
+        cout<<"Saldo Insuficiente";
+    }
+}
+
+void get_etirps(){
+    if(Saldo==150){
+        cout<<"Pegue seu refrigerante Etirps!"<<endl;
+        Saldo=0;
+    }
+    else{
+        cout<<"Saldo Insuficiente";
+    }
+}
+
+int main(){
+    while(1){       
+        int menu;   
+        cout<<"Selecione uma das opções:"<<endl;
+        cout<<"1) Inserir"<<endl<<"2) Devolver"<<endl<<"3) Meets"<<endl<<"4)Etirps"<<endl;
+        cout<<"Digite o código referente a opção desejada:";
+        cin>>menu;
+            switch(menu){    
+                case 1:
+                    inserir();
+                    break;
+                case 2:
+                    devolver();
+                    break;
+                case 3:
+                    get_meets();
+                    break;
+                case 4:
+                    get_etirps();
+                    break;
+                default:
+                    cout<<"menu incorreto"<<endl;
+                    break;
+                
+            }       
     }
 }
