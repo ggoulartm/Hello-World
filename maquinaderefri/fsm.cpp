@@ -1,3 +1,16 @@
+/*
+Universidade Federal de Santa Catarina
+Engenharia Eletrônica
+Disciplina de Programação C++ para Sistemas Embarcados
+Estudantes: Gabriel Goulart Müller e Henrique
+Data: 19/10/2022
+
+Arquivo: fsm.cpp
+
+Descrição: esse arquivo serve para implementar a máquina de estados finitos do sistema embarcado
+*/
+
+
 #pragma once
 #include <iostream>
 using namespace std;
