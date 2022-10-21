@@ -40,6 +40,7 @@ class DisplayLCD: public DispositivoSaida{
         }
         void setPrice(double price){
             preco=price;
+            cout<<"alterou preco de "<<descricao<<" (codigo: "<<codigo<<") para "<<price<<endl;
         }
         void imprimir(void){
             cout<<endl;
@@ -99,19 +100,29 @@ d1_lcd.setPrice(0.8);
 d2_lcd.setDescricao("Display LCD Colorido");
 d2_lcd.setPrice(0.9);
 cout<<endl;
+
+DispositivoSaida* ptr= &d1_lcd;
 cout<<"Mensagem gerada pela funcao imprimir na classe derivada:";
-d1_lcd.imprimir();
+
+ptr->imprimir();
 cout<<endl;
+
+ptr=&d2_lcd;
 cout<<"Mensagem gerada pela funcao imprimir na classe derivada:";
-d2_lcd.imprimir();
+ptr->imprimir();
 cout<<endl;
+
+ptr=&d3_lcd;
 cout<<"Mensagem gerada pela funcao imprimir na classe derivada:";
-d3_lcd.imprimir();
+ptr->imprimir();
 cout<<endl;
+
 d1_7seg.setDescricao("Display 7-seg Vermelho ");
-cout<<endl;
 cout<<"Mensagem gerada pela funcao de alteracao de preco:"<<endl;
 d1_7seg.setPrice(1.2);
+cout<<endl;
+
+ptr=&d1_7seg;
 cout<<"Mensagem gerada pela funcao imprimir na classe derivada:";
-d1_7seg.imprimir();
+ptr->imprimir();
 }
