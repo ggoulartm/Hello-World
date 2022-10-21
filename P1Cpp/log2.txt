@@ -1,0 +1,52 @@
+Mensagem gerada pelo construtor do Display LCD:
+novo código (aleatório): 2876
+nova descrição: SEM DESCRIÇÃO!!!
+Mensagem gerada pelo construtor do Display LCD:
+novo código (aleatório): 1259
+nova descrição: SEM DESCRIÇÃO!!!
+Mensagem gerada pelo construtor do Display LCD:
+novo código: 120
+nova descrição: Display LCD 2 linhas
+Mensagem gerada pelo construtor do produto Display 7-seg:
+novo código (aleatório): 929
+nova descrição: SEM DESCRIÇÃO!!!
+Mensagem gerada pelo construtor do produto Display 7-seg:
+novo código (aleatório): 2315
+nova descrição: SEM DESCRIÇÃO!!!
+Mensagem gerada pela funcao de alteracao de preco:
+alterou preco de Display LCD 1 linha (codigo: 2876) para 0.8
+Mensagem gerada pela funcao de alteracao de preco:
+Mensagem gerada pela funcao de alteracao de preco:
+alterou preco de Display LCD Colorido (codigo: 1259) para 0.9
+
+Mensagem gerada pela funcao imprimir na classe derivada:
+=================================================
+Dados do Produto: 2876, Display LCD 1 linha, R$ 0.8
+=================================================
+
+
+Mensagem gerada pela funcao imprimir na classe derivada:
+=================================================
+Dados do Produto: 1259, Display LCD Colorido, R$ 0.9
+=================================================
+
+
+Mensagem gerada pela funcao imprimir na classe derivada:
+=================================================
+Dados do Produto: 120, Display LCD 2 linhas, R$ 0
+=================================================
+
+
+Mensagem gerada pela funcao de alteracao de preco:
+alterou preco de Display 7-seg Vermelho  (codigo: 929) para 1.2
+
+Mensagem gerada pela funcao imprimir na classe derivada:
+=================================================
+Dados do Produto: 929, Display 7-seg Vermelho , R$ 1.2
+=================================================
+
+Destrutor: removeu 2315
+Destrutor: removeu 929
+Destrutor: removeu 120
+Destrutor: removeu 1259
+Destrutor: removeu 2876
