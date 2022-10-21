@@ -18,6 +18,8 @@ o dispositivo no qual o sistema está embarcado
 #include "Oled.cpp"
 using namespace std;
 
+volatile unsigned int *button = (volatile unsigned int *)0x80000a00;
+
 class FSM{
     protected:
     int saldo;
@@ -71,17 +73,17 @@ class Linux: public FSM {
     }
 };
 
+    char s1[] = "R$ 0,00";
+    char s2[] = "R$ 0,25";
+    char s3[] = "R$ 0,50";
+    char s4[] = "R$ 0,75";
+    char s5[] = "R$ 1,00";
+    char s6[] =  "R$ 1,25";
+    char s7[] =  "R$ 1,50";
+    char takeMeets[]={"Pegue seu refrigerante Meets!"};
+    char takeEtirps[] = "Pegue seu refrigerante Etirps!";
 class Atlys: public FSM {
-    char* s1 = "R$ 0,00";
-    char* s2 = "R$ 0,25";
-    char* s3 = "R$ 0,50";
-    char* s4 = "R$ 0,75";
-    char* s5 = "R$ 1,00";
-    char* s6 =  "R$ 1,25";
-    char* s7 =  "R$ 1,50";
     public:
-     Atlys();
-     ~Atlys();
      void display(char* credito){
          //funções oled
         oledInit();
@@ -118,12 +120,15 @@ class Atlys: public FSM {
         delay(100000);
          //funções botões e switches
         setLine(0);
-        printString("Selecione uma das opções:");
+        char op[] = "Selecione uma das opções:";
+        printString(op);
         setLine(1);
-        printString("1) Inserir  2) Devolver  3) Meets  4)Etirps");
+        char idme[] = "1) Inserir  2) Devolver  3) Meets  4)Etirps";
+        printString(idme);
         setLine(2);
-        printString("Digite o código referente a opção desejada:");
-            switch(*data){    
+        char cod[] = "Digite o código referente a opção desejada:";
+        printString(cod);
+            switch(*button){    
                 case 256:
                     inserir();
                     setSaldo();
@@ -139,19 +144,19 @@ class Atlys: public FSM {
                     setSaldo();
                     oledClear();
                     setLine(0);
-                    printString("Pegue seu refrigerante Meets!");
+                    printString(takeMeets);
                     break;
                 case 2048:
                     get_etirps();
                     setSaldo();
                     oledClear();
                     setLine(0);
-                    printString("Pegue seu refrigerante Meets!");
+                    printString(takeEtirps);
                     break;
                 default:
-                    printString("menu incorreto");
+                    char menuErr[] = "menu incorreto"; 
+                    printString(menuErr);
                     break;
-                
             }   
      }
 };

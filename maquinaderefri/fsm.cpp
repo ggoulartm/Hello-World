@@ -11,8 +11,10 @@ Descrição: esse arquivo serve para implementar a máquina de estados finitos d
 */
 
 #define OLED 1
+
 #pragma once
 #include <iostream>
+#include "Oled.cpp"
 using namespace std;
 
 typedef enum{
@@ -183,7 +185,8 @@ void inserir(){
                 if(!OLED)
                     {cout<<"Valor Inserido Inválido"<<endl;}
                 else{
-                    printString("Valor Inserido Inválido");
+                    char err[]="Valor Inserido Inválido";
+                    printString(err);
                 }
             }
         }

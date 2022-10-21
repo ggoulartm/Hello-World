@@ -1,3 +1,4 @@
+#pragma once
 #include "Oled.h"
 
 using namespace std;
