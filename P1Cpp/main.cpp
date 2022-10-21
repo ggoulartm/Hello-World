@@ -94,9 +94,11 @@ Display7seg d1_7seg;
 cout<<"Mensagem gerada pelo construtor do produto Display 7-seg:"<<endl;
 Display7seg d2_7seg;
 
+cout<<"Mensagem gerada pela funcao de alteracao de preco:"<<endl;
 d1_lcd.setDescricao("Display LCD 1 linha");
 d1_lcd.setPrice(0.8);
 
+cout<<"Mensagem gerada pela funcao de alteracao de preco:"<<endl;
 d2_lcd.setDescricao("Display LCD Colorido");
 d2_lcd.setPrice(0.9);
 cout<<endl;
@@ -116,6 +118,7 @@ ptr=&d3_lcd;
 cout<<"Mensagem gerada pela funcao imprimir na classe derivada:";
 ptr->imprimir();
 cout<<endl;
+
 
 d1_7seg.setDescricao("Display 7-seg Vermelho ");
 cout<<"Mensagem gerada pela funcao de alteracao de preco:"<<endl;
