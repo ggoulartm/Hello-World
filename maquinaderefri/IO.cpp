@@ -128,7 +128,7 @@ class Atlys: public FSM {
         char idme[] = "1) Inserir  2) Devolver  3) Meets  4)Etirps";
         printString(idme);
         setLine(2);
-        char cod[] = "Digite o código referente a opção desejada:";
+        char cod[] = "Mova o Switch referente a opção desejada";
         printString(cod);
             switch(*button){    
                 case 256:

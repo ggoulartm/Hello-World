@@ -14,6 +14,7 @@ Descrição: esse arquivo serve para implementar a máquina de estados finitos d
 
 #pragma once
 #include <iostream>
+#include <cmath>
 #include "Oled.cpp"
 #include "utils.cpp"
 using namespace std;
@@ -33,6 +34,7 @@ stateNames currentState=S000;
 bool event=false;
 int moeda=0;
 int Saldo=0;
+volatile unsigned int *btn = (volatile unsigned int *)0x80000a00;
 
 bool event0(){
     if(moeda==25){
@@ -189,7 +191,12 @@ void inserir(){
 
         cout<<"Insira uma moeda: "<<endl;
         while(!event){
-            cin>>moeda;
+            if(OLED){
+                moeda=25*(*btn)/pow(2,16);
+            }else{
+                cin>>moeda;
+            }
+            
             if(moeda==25){
                 event=true;
                 event0();
