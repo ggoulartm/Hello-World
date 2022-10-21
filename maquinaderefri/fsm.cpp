@@ -10,7 +10,7 @@ Arquivo: fsm.cpp
 Descrição: esse arquivo serve para implementar a máquina de estados finitos do sistema embarcado
 */
 
-#define OLED 1
+#define OLED 0
 
 #pragma once
 #include <iostream>

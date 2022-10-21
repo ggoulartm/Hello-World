@@ -16,17 +16,19 @@ nas plataformas Linux e Atlys
 #include <iostream>
 using namespace std;
 
-#ifndef OLED
-    Linux disp;
-#endif
-#ifdef OLED
-    Atlys disp;
-#endif
 
+
+Atlys disp1;
+Linux disp2;
+FSM* disp=&disp2;
 
 int main(){
+    if(OLED){
+        disp=&disp1;
+    }
+    
     while(1){       
-        disp.menu();
+        disp->menu();
     }
 
     return 0;

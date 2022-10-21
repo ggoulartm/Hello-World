@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include "Oled.h"
 
-#define OLED 1
+
 
 using namespace std;
 

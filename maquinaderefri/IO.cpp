@@ -27,6 +27,7 @@ class FSM{
     int saldo;
     public:
         virtual void menu()=0;
+        virtual void display(char* credito)=0;
         void setSaldo(){
             saldo=Saldo;
         }
@@ -41,7 +42,8 @@ class Linux: public FSM {
         cout<<endl<<endl<<endl<<endl;
         cout<<"Finalizando Sistema";
     }
-    void display(){
+    void display(char* credito){
+        saldo=saldo+*credito;
         cout<<"Saldo"<<saldo<<endl;
     }
     void menu(){
