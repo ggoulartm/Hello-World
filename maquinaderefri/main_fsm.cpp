@@ -15,17 +15,17 @@ nas plataformas Linux e Atlys
 #include "IO.cpp"
 #include <iostream>
 using namespace std;
-#define OLED 1
 
-if(!OLED){
+#ifndef OLED
     Linux disp;
-}else{
+#endif
+#ifdef OLED
     Atlys disp;
-}
+#endif
+
 
 int main(){
     while(1){       
-        disp.display();
         disp.menu();
     }
 

@@ -10,7 +10,7 @@ Arquivo: fsm.cpp
 Descrição: esse arquivo serve para implementar a máquina de estados finitos do sistema embarcado
 */
 
-
+#define OLED 1
 #pragma once
 #include <iostream>
 using namespace std;
@@ -180,7 +180,11 @@ void inserir(){
                 event0();
             }
             else{
-                cout<<"Valor Inserido Inválido"<<endl;
+                if(!OLED)
+                    {cout<<"Valor Inserido Inválido"<<endl;}
+                else{
+                    printString("Valor Inserido Inválido");
+                }
             }
         }
         runFSM();
