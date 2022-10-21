@@ -15,6 +15,7 @@ Descrição: esse arquivo serve para implementar a máquina de estados finitos d
 #pragma once
 #include <iostream>
 #include "Oled.cpp"
+#include "utils.cpp"
 using namespace std;
 
 typedef enum{
@@ -35,19 +36,22 @@ int Saldo=0;
 
 bool event0(){
     if(moeda==25){
-        cout<<"Foi inserida uma moeda de 25 centavos"<<endl;
+            char coin[]="Foi inserida uma moeda de 25 centavos";
+            printGeneric(coin,2);
     }
     return event;
 }
 bool event1(){
     if(moeda==50){
-        cout<<"Foi inserida uma moeda de 50 centavos"<<endl;
+            char coin[]="Foi inserida uma moeda de 50 centavos";
+            printGeneric(coin,2);
     }
     return event;
 }
 bool event2(){
     if(moeda==100){
-        cout<<"Foi inserida uma moeda de 50 centavos"<<endl;
+            char coin[]="Foi inserida uma moeda de 1 real";
+            printGeneric(coin,2);
     }
     return event;
 }
@@ -57,17 +61,20 @@ void runFSM(){
     case S000:
         if(moeda==25){
             currentState=S025;
-            cout<<"Saldo Atual R$ 0,25"<<endl;
+            char atual25[]="Saldo Atual R$ 0,25";
+            printGeneric(atual25,1);
             Saldo=25;
         }
         if(moeda==50){
             currentState=S050;
-            cout<<"Saldo Atual R$ 0,50"<<endl;
+            char atual50[]="Saldo Atual R$ 0,50";
+            printGeneric(atual50,1);
             Saldo = 50;
         }
         if(moeda==100){
             currentState=S100;
-            cout<<"Saldo Atual R$ 1,00"<<endl;
+            char atual100[]="Saldo Atual R$ 1,00";
+            printGeneric(atual100,1);
             Saldo = 100;
         }
         break;
@@ -75,17 +82,20 @@ void runFSM(){
     case S025:
         if(moeda==25){
             currentState=S050;
-            cout<<"Saldo Atual R$ 0,50"<<endl;
+            char atual50[]="Saldo Atual R$ 0,50";
+            printGeneric(atual50,1);
             Saldo = 50;
         }
         if(moeda==50){
             currentState=S075;
-            cout<<"Saldo Atual R$ 0,75"<<endl;
+            char atual75[]="Saldo Atual R$ 0,75";
+            printGeneric(atual75,1);
             Saldo = 75;
         }
         if(moeda==100){
             currentState=S125;
-            cout<<"Saldo Atual R$ 1,25"<<endl;
+            char atual125[]="Saldo Atual R$ 1,25";
+            printGeneric(atual125,1);
             Saldo = 100;
         }
         break;
@@ -94,17 +104,20 @@ void runFSM(){
     case S050:
         if(moeda==25){
             currentState=S075;
-            cout<<"Saldo Atual R$ 0,75"<<endl;
+            char atual75[]="Saldo Atual R$ 0,75";
+            printGeneric(atual75,1);
             Saldo = 75;
         }
         if(moeda==50){
             currentState=S100;
-            cout<<"Saldo Atual R$ 1,00"<<endl;
+            char atual100[]="Saldo Atual R$ 1,00";
+            printGeneric(atual100,1);
             Saldo = 100;
         }
         if(moeda==100){
             currentState=S150;
-            cout<<"Saldo Atual R$ 1,50"<<endl;
+            char atual150[]="Saldo Atual R$ 1,50";
+            printGeneric(atual150,1);
             Saldo = 150;
         }
         break;
@@ -112,17 +125,20 @@ void runFSM(){
     case S075:
         if(moeda==25){
             currentState=S100;
-            cout<<"Saldo Atual R$ 1,00"<<endl;
+            char atual100[]="Saldo Atual R$ 1,00";
+            printGeneric(atual100,1);
             Saldo = 100;
         }
         if(moeda==50){
             currentState=S125;
-            cout<<"Saldo Atual R$ 1,25"<<endl;
+            char atual125[]="Saldo Atual R$ 1,25";
+            printGeneric(atual125,1);
             Saldo = 125;
         }
         if(moeda==100){
             currentState=S150;
-            cout<<"Saldo Atual R$ 1,50"<<endl;
+            char atual150[]="Saldo Atual R$ 1,50";
+            printGeneric(atual150,1);
             Saldo = 150;
         }
         break;
@@ -130,12 +146,14 @@ void runFSM(){
     case S100:
         if(moeda==25){
             currentState=S125;
-            cout<<"Saldo Atual R$ 1,25"<<endl;
+            char atual125[]="Saldo Atual R$ 1,25";
+            printGeneric(atual125,1);
             Saldo = 125;
         }
         if(moeda==50 || moeda==100){
             currentState=S150;
-            cout<<"Saldo Atual R$ 1,50"<<endl;
+            char atual150[]="Saldo Atual R$ 1,50";
+            printGeneric(atual150,1);
             Saldo = 150;
         }
         break;
@@ -144,7 +162,8 @@ void runFSM(){
     case S125:
         if(moeda==25 || moeda==50 || moeda==100){
             currentState=S150;
-            cout<<"Saldo Atual R$ 1,50"<<endl;
+            char atual150[]="Saldo Atual R$ 1,50";
+            printGeneric(atual150,1);
             Saldo = 150;
         }
         break;
@@ -153,13 +172,15 @@ void runFSM(){
     case S150:
         if(moeda==25 || moeda==50 || moeda==100){
             currentState=S150;
-            cout<<"Saldo Atual R$ 1,50"<<endl;
+            char atual150[]="Saldo Atual R$ 1,50";
+            printGeneric(atual150,1);
             Saldo = 150;
         }
         break;
 
     default:
-        cout<<"Erro"<<endl;
+        char error[]="Erro";
+        printGeneric(error,1);
         break;
     }
 }
@@ -182,12 +203,8 @@ void inserir(){
                 event0();
             }
             else{
-                if(!OLED)
-                    {cout<<"Valor Inserido Inválido"<<endl;}
-                else{
-                    char err[]="Valor Inserido Inválido";
-                    printString(err);
-                }
+                char err[]="Valor Inserido Inválido";
+                printGeneric(err, 1);
             }
         }
         runFSM();
@@ -202,20 +219,24 @@ void devolver(){
 
 void get_meets(){
     if(Saldo==150){
-        cout<<"Pegue seu refrigerante Meets!"<<endl;
+        char takeMeet[] = "Pegue seu refrigerante Meets!";
+        printGeneric(takeMeet, 1);
         Saldo=0;
     }
     else{
-        cout<<"Saldo Insuficiente";
+        char saldoInsuficiente[]="Saldo Insuficiente";
+        printGeneric(saldoInsuficiente,1);
     }
 }
 
 void get_etirps(){
     if(Saldo==150){
-        cout<<"Pegue seu refrigerante Etirps!"<<endl;
+        char takeEtirp[]="Pegue seu refrigerante Etirps!";
+        printGeneric(takeEtirp,1);
         Saldo=0;
     }
     else{
-        cout<<"Saldo Insuficiente";
+        char saldoInsuficiente[]="Saldo Insuficiente";
+        printGeneric(saldoInsuficiente,1);
     }
 }

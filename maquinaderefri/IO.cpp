@@ -18,7 +18,9 @@ o dispositivo no qual o sistema está embarcado
 #include "Oled.cpp"
 using namespace std;
 
+#ifdef OLED
 volatile unsigned int *button = (volatile unsigned int *)0x80000a00;
+#endif
 
 class FSM{
     protected:
