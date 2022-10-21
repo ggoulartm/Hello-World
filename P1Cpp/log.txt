@@ -1,28 +1,30 @@
 Mensagem gerada pelo construtor do Display LCD:
-novo código (aleatório): 1245
+novo código (aleatório): 5744
 nova descrição: SEM DESCRIÇÃO!!!
 Mensagem gerada pelo construtor do Display LCD:
-novo código (aleatório): 1800
+novo código (aleatório): 6023
 nova descrição: SEM DESCRIÇÃO!!!
 Mensagem gerada pelo construtor do Display LCD:
 novo código: 120
 nova descrição: Display LCD 2 linhas
 Mensagem gerada pelo construtor do produto Display 7-seg:
-novo código (aleatório): 2573
+novo código (aleatório): 8753
 nova descrição: SEM DESCRIÇÃO!!!
 Mensagem gerada pelo construtor do produto Display 7-seg:
-novo código (aleatório): 5747
+novo código (aleatório): 5808
 nova descrição: SEM DESCRIÇÃO!!!
+alterou preco de Display LCD 1 linha (codigo: 5744) para 0.8
+alterou preco de Display LCD Colorido (codigo: 6023) para 0.9
 
 Mensagem gerada pela funcao imprimir na classe derivada:
 =================================================
-Dados do Produto: 1245, Display LCD 1 linha, R$ 0.8
+Dados do Produto: 5744, Display LCD 1 linha, R$ 0.8
 =================================================
 
 
 Mensagem gerada pela funcao imprimir na classe derivada:
 =================================================
-Dados do Produto: 1800, Display LCD Colorido, R$ 0.9
+Dados do Produto: 6023, Display LCD Colorido, R$ 0.9
 =================================================
 
 
@@ -32,16 +34,16 @@ Dados do Produto: 120, Display LCD 2 linhas, R$ 0
 =================================================
 
 
-
 Mensagem gerada pela funcao de alteracao de preco:
-alterou preco de Display 7-seg Vermelho  (codigo: 2573) para 1.2
+alterou preco de Display 7-seg Vermelho  (codigo: 8753) para 1.2
+
 Mensagem gerada pela funcao imprimir na classe derivada:
 =================================================
-Dados do Produto: 2573, Display 7-seg Vermelho , R$ 1.2
+Dados do Produto: 8753, Display 7-seg Vermelho , R$ 1.2
 =================================================
 
-Destrutor: removeu 5747
-Destrutor: removeu 2573
+Destrutor: removeu 5808
+Destrutor: removeu 8753
 Destrutor: removeu 120
-Destrutor: removeu 1800
-Destrutor: removeu 1245
+Destrutor: removeu 6023
+Destrutor: removeu 5744
