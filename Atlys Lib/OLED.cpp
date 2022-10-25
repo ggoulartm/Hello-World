@@ -1,4 +1,3 @@
-
 #include "Oled.h"
 
 using namespace std;
@@ -6,7 +5,7 @@ using namespace std;
 /* Global variables */
 
 volatile unsigned int *output = (volatile unsigned int *)0x80000a04;
-volatile unsigned int *data = (volatile unsigned int *)0x80000a00;
+//volatile unsigned int *data = (volatile unsigned int *)0x80000a00;
 volatile unsigned int *direction = (volatile unsigned int *)0x80000a08;
 
 int characters[] = {
@@ -254,7 +253,7 @@ void oledInit() {
 	setPin(VBATC, 1);
 	setPin(CS, 1);
 	setPin(SCLK, 0);
-	
+
 	*direction = 0xFFFFFFFF;
 
 	/* Apply power to VDD (LOW) */
@@ -302,43 +301,46 @@ void oledOff() {
 }
 
 void setLine(unsigned line) {
-	sendCommand(0xb4+ line);
+	sendCommand(0xb4 + line);
 	sendCommand(0x00);
 	sendCommand(0x10);
 }
 
 void oledFill() {
-	for (unsigned i=0; i<4; i++) {
+	for (unsigned i = 0; i<4; i++) {
 		//Select Line
 		setLine(i);
 		//Fill the line
-		for (unsigned j=0; j<128; j++)
+		for (unsigned j = 0; j<128; j++)
 			sendData(0xFF);
 	}
 }
 
 void oledClear() {
-	for (unsigned i=0; i<4; i++) {
+	for (unsigned i = 0; i<4; i++) {
 		//Select Line
 		setLine(i);
 		//Fill the line
-		for(unsigned j=0;j<128;j++)
+		for (unsigned j = 0; j<128; j++)
 			sendData(0x00);
 	}
 }
 
 void clearLine(int line) {
 	setLine(line);
-	for(unsigned j=0;j<128;j++)
-			sendData(0x00);
+	for (unsigned j = 0; j<128; j++)
+		sendData(0x00);
 }
 
 void printChar(char aux) {
 	for (unsigned i = 0; i < 8; i++)
-		sendData(characters[8*aux + i]);
+		sendData(characters[8 * aux + i]);
 }
 
-void printString(char* string) {
-	for (unsigned i = 0; string[i] != 0; i++)
-		printChar(string[i]);
+void printString(string texto) {
+	char aux1;
+	for (int i = 0; i <= texto.size(); i++){
+		aux1 = texto[i];
+		printChar(aux1);
+	}
 }

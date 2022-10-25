@@ -191,8 +191,9 @@ void inserir(){
 
         cout<<"Insira uma moeda: "<<endl;
         while(!event){
+		while(*btn==822083584){};
             if(OLED){
-                moeda=25*(*btn)/pow(2,16);
+                moeda=25*(*btn-822083584)/pow(2,16);
             }else{
                 cin>>moeda;
             }
@@ -203,11 +204,11 @@ void inserir(){
             }
             else if(moeda==50){
                 event=true;
-                event0();
+                event1();
             }
             else if(moeda==100){
                 event=true;
-                event0();
+                event2();
             }
             else{
                 char err[]="Valor Inserido Inválido";
@@ -222,6 +223,9 @@ void inserir(){
 
 void devolver(){
     currentState=S000;
+	Saldo=0;
+	char err[]="Seu dinheiro foi devolvido";
+	printGeneric(err, 1);
 }
 
 void get_meets(){

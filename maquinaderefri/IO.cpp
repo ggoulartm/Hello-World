@@ -121,7 +121,7 @@ class Atlys: public FSM {
      }
      void menu(){
         callDisplay();
-        delay(100000);
+        delay(500000);
          //funções botões e switches
         setLine(0);
         char op[] = "Selecione uma das opções:";
@@ -132,25 +132,26 @@ class Atlys: public FSM {
         setLine(2);
         char cod[] = "Mova o Switch referente a opção desejada";
         printString(cod);
+	    while(*button == 822083584){};
             switch(*button){    
-                case 256:
+                case 822083840:
                     inserir();
                     setSaldo();
                     callDisplay();
                     break;
-                case 512:
+                case 822084096:
                     devolver();
                     setSaldo();
                     callDisplay();
                     break;
-                case 1024:
+                case 822084608:
                     get_meets();
                     setSaldo();
                     oledClear();
                     setLine(0);
                     printString(takeMeets);
                     break;
-                case 2048:
+                case 822085632:
                     get_etirps();
                     setSaldo();
                     oledClear();
@@ -158,6 +159,8 @@ class Atlys: public FSM {
                     printString(takeEtirps);
                     break;
                 default:
+		    oledClear();
+		    cout << "Current value of gpio lines: 0x" << *button << std::endl;
                     char menuErr[] = "menu incorreto"; 
                     printString(menuErr);
                     break;

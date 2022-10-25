@@ -1,0 +1,64 @@
+2,3c2,3
+< novo código (aleatório): 3578
+< nova descrição: SEM DESCRIÇÃO!!!
+---
+> - novo codigo (aleatorio) = 1630
+> - nova descricao = SEM DESCRICAO!!
+5,6c5,6
+< novo código (aleatório): 1067
+< nova descrição: SEM DESCRIÇÃO!!!
+---
+> - novo codigo (aleatorio) = 7210
+> - nova descricao = SEM DESCRICAO!!
+8,9c8,9
+< novo código: 120
+< nova descrição: Display LCD 2 linhas
+---
+> - novo codigo = 120
+> - nova descricao = Display LCD 2 linhas
+11,15c11,12
+< novo código (aleatório): 1837
+< nova descrição: SEM DESCRIÇÃO!!!
+< Mensagem gerada pelo construtor do produto Display 7-seg:
+< novo código (aleatório): 8124
+< nova descrição: SEM DESCRIÇÃO!!!
+---
+> - novo codigo (aleatorio) = 583
+> - nova descricao = SEM DESCRICAO!!
+17c14
+< alterou preco de Display LCD 1 linha (codigo: 3578) para 0.8
+---
+> - alterou preco de Display LCD 1 linha (codigo: 1630) para 0.8
+19c16
+< alterou preco de Display LCD Colorido (codigo: 1067) para 0.9
+---
+> - alterou preco de Display LCD Colorido (codigo: 7210) para 0.9
+21c18
+< Dados do Produto: 3578, Display LCD 1 linha, R$ 0.8
+---
+> - Dados do produto: 1630, Display LCD 1 linha, R$ 0.8
+23c20
+< Dados do Produto: 1067, Display LCD Colorido, R$ 0.9
+---
+> - Dados do produto: 7210, Display LCD Colorido, R$ 0.9
+25c22
+< Dados do Produto: 120, Display LCD 2 linhas, R$ 0
+---
+> - Dados do produto: 120, Display LCD 2 linhas, R$ 0
+27c24
+< alterou preco de Display 7-seg Vermelho  (codigo: 1837) para 1.2
+---
+> - alterou preco de Display 7-seg Vermelho (codigo: 583) para 1.2
+29,31c26
+< Dados do Produto: 1837, Display 7-seg Vermelho , R$ 1.2
+< Destrutor: removeu 8124
+< Destrutor: removeu 1837
+---
+> - Dados do produto: 583, Display 7-seg Vermelho, R$ 1.2
+33,34c28,30
+< Destrutor: removeu 1067
+< Destrutor: removeu 3578
+---
+> Destrutor: removeu 583
+> Destrutor: removeu 7210
+> Destrutor: removeu 1630

@@ -17,33 +17,16 @@ Mensagem gerada pela funcao de alteracao de preco:
 alterou preco de Display LCD 1 linha (codigo: 3578) para 0.8
 Mensagem gerada pela funcao de alteracao de preco:
 alterou preco de Display LCD Colorido (codigo: 1067) para 0.9
-
 Mensagem gerada pela funcao imprimir na classe derivada:
-=================================================
 Dados do Produto: 3578, Display LCD 1 linha, R$ 0.8
-=================================================
-
-
 Mensagem gerada pela funcao imprimir na classe derivada:
-=================================================
 Dados do Produto: 1067, Display LCD Colorido, R$ 0.9
-=================================================
-
-
 Mensagem gerada pela funcao imprimir na classe derivada:
-=================================================
 Dados do Produto: 120, Display LCD 2 linhas, R$ 0
-=================================================
-
-
 Mensagem gerada pela funcao de alteracao de preco:
 alterou preco de Display 7-seg Vermelho  (codigo: 1837) para 1.2
-
 Mensagem gerada pela funcao imprimir na classe derivada:
-=================================================
 Dados do Produto: 1837, Display 7-seg Vermelho , R$ 1.2
-=================================================
-
 Destrutor: removeu 8124
 Destrutor: removeu 1837
 Destrutor: removeu 120
