@@ -27,8 +27,10 @@ int value = 0;
 void setup() {
   delay(500);
   
-  // When opening the Serial Monitor, select 9600 Baud
-  Serial.begin(9600);
+  // When opening the Serial Monitor, select 500000 Baud
+  Serial.begin(500000);
+  can_initialize();
+  sendConfig();
   delay(500);
 
   LittleFS.begin();
@@ -58,6 +60,11 @@ void setup() {
 }
 
 void loop() {
+  //CAN
+  requestConfig();
+  readCan();
+
+  //MQTT
   if (!client->connected()) {
     reconnect();
   }
