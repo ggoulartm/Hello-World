@@ -1,26 +1,25 @@
-#include <mcp_can_dfs.h>
+#include <BMS.h>
 #include <mcp_can.h>
-#include <can_receive.h>
 #include <hivemq.h>
 
-
-String message=0;
-
+BMS bms;
+HiveMQ hivemq;
 
 void setup() {
   delay(500);
   Serial.begin(500000);
-  Can can();
+  bms.can_intialize();
+//  bms.sendConfig();
   delay(500);
-  HiveMQ.hivemq_initialize();
+  hivemq.hivemq_initialize();
 }
 
 void loop() {
-  //CAN
-  Can.requestConfig();
-  int canRead[] = Can.readCan();
-  for(int i: canRead){
-    message = String(i);
-    HiveMQ.clientPublish(message);
+  char message[]="";
+  bms.requestConfig();
+  int* canRead = {bms.readCan()};
+  for(int* i=canRead; i<4+canRead; i++){
+    message = {String(*i)};
+    hivemq.clientPublish(message);
   }
 }

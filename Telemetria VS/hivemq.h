@@ -26,4 +26,4 @@ int value = 0;
     public:
     void hivemq_initialize();
     void clientPublish(String message);
-}
+};
