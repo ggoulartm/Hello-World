@@ -1,0 +1,27 @@
+WARNING: Spurious .settings folder in 'autowp-mcp2515' library
+In file included from /home/ggmuller/ggmller/embeddedSYSTEMS/Telemetria VS/Telmetria_VS.ino/Telmetria_VS.ino.ino:3:
+/home/ggmuller/Arduino/libraries/can_receive/can_receive.h:29:18: error: expected identifier before numeric constant
+   29 |     MCP_CAN CAN0(10);                               // Set CS to pin 10
+      |                  ^~
+/home/ggmuller/Arduino/libraries/can_receive/can_receive.h:29:18: error: expected ',' or '...' before numeric constant
+Telmetria_VS.ino:7:8: error: expected initializer before 'message'
+    7 | String message=0;
+      |        ^~~~~~~
+/home/ggmuller/ggmller/embeddedSYSTEMS/Telemetria VS/Telmetria_VS.ino/Telmetria_VS.ino.ino: In function 'void setup()':
+Telmetria_VS.ino:15:9: error: expected unqualified-id before '.' token
+   15 |   HiveMQ.hivemq_initialize();
+      |         ^
+/home/ggmuller/ggmller/embeddedSYSTEMS/Telemetria VS/Telmetria_VS.ino/Telmetria_VS.ino.ino: In function 'void loop()':
+Telmetria_VS.ino:20:6: error: expected unqualified-id before '.' token
+   20 |   Can.requestConfig();
+      |      ^
+Telmetria_VS.ino:21:22: error: expected primary-expression before '.' token
+   21 |   int canRead[] = Can.readCan();
+      |                      ^
+Telmetria_VS.ino:23:5: error: 'message' was not declared in this scope
+   23 |     message = String(i);
+      |     ^~~~~~~
+Telmetria_VS.ino:24:11: error: expected unqualified-id before '.' token
+   24 |     HiveMQ.clientPublish(message);
+      |           ^
+exit status 1
