@@ -1,9 +1,14 @@
-#include <mcp2515.cpp>
+#include <mcp_can.h>
 #include <SPI.cpp>
 #include "can_receive.h"
-#include "BMS.cpp"
+#include <vector>
 
-void can_intialize(){
+Can Can::CAN(){
+    can_intialize();
+    sendConfig();
+}
+
+void CAN::can_intialize(){
    // Initialize MCP2515 running at 16MHz with a baudrate of 500kb/s and the masks and filters disabled.
   if(CAN0.begin(MCP_ANY, CAN_125KBPS, MCP_8MHZ) == CAN_OK)
     Serial.println("MCP2515 Initialized Successfully!");
@@ -18,7 +23,7 @@ void can_intialize(){
   delay(3000);
 }
 
-void sendConfig(){
+void CAN::sendConfig(){
     if(SENDCONFIG){
         //**************ENVIO DE CONFIG1***********
         byte data[8] = {0x00, 0x01, 0x02, 0xFF, 0x04, 0x05, 0x06, 0x07};
@@ -80,7 +85,7 @@ void sendConfig(){
 
 int count=0;
 
-void requestConfig(){
+void CAN::requestConfig(){
     if(REQUEST_CONFIG){
     count++;
         if(count>=60)
@@ -99,8 +104,8 @@ void requestConfig(){
     }
 }
 
-void readCan(){
-
+int CAN::readCan(){
+    int canRead[4]={Current1, Current2, Vpack, SoC};
     //*****************************************************
  if(readcan>=16) //se leu valores pelo CAN então printa o que possível na ordem certa:
  {
@@ -349,7 +354,7 @@ void readCan(){
 
   }
 
-
+return canRead;
 }
 
 /*********************************************************************************************************
