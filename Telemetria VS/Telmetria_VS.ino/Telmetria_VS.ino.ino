@@ -1,5 +1,4 @@
 #include <BMS.h>
-#include <mcp_can.h>
 #include <hivemq.h>
 
 BMS bms;
@@ -15,11 +14,10 @@ void setup() {
 }
 
 void loop() {
-  char message[]="";
   bms.requestConfig();
   int* canRead = {bms.readCan()};
   for(int* i=canRead; i<4+canRead; i++){
-    message = {String(*i)};
-    hivemq.clientPublish(message);
+    //0:C1,1:C2,2:Vp,3:SoC
+    hivemq.clientPublish(*i);
   }
 }

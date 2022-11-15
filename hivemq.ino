@@ -5,6 +5,9 @@
 #include <FS.h>
 #include <LittleFS.h>
 #include <CertStoreBearSSL.h>
+#include <BMS.h>
+
+BMS bms;
 
 // Update these with values suitable for your network.
 const char* ssid = "Eletro_europa";
@@ -116,7 +119,8 @@ void reconnect() {
 void setup() {
   delay(500);
   // When opening the Serial Monitor, select 9600 Baud
-  Serial.begin(9600);
+  Serial.begin(500000);
+  bms.can_intialize();
   delay(500);
 
   LittleFS.begin();
@@ -146,18 +150,22 @@ void setup() {
 }
 
 void loop() {
+  bms.requestConfig();
+  int* canRead = {bms.readCan()};
+
   if (!client->connected()) {
     reconnect();
   }
   client->loop();
-
-  unsigned long now = millis();
-  if (now - lastMsg > 2000) {
-    lastMsg = now;
-    ++value;
-    snprintf (msg, MSG_BUFFER_SIZE, "hello world #%ld", value);
-    Serial.print("Publish message: ");
-    Serial.println(msg);
-    client->publish("testTopic", msg);
+  for(int* i=canRead; i<canRead+4; i++){
+    unsigned long now = millis();
+    if (now - lastMsg > 2000) {
+      lastMsg = now;
+      ++value;
+      snprintf (msg, MSG_BUFFER_SIZE, "hello world #%ld", *i);
+      Serial.print("Publish message: ");
+      Serial.println(msg);
+      client->publish("testTopic", msg);
+    }
   }
 }
