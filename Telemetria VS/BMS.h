@@ -1,12 +1,10 @@
 #ifndef BATTERYMANAGEMENTSYSTEM
 #define BATTERYMANAGEMENTSYSTEM
 #include <mcp_can.h>
-#include <SPI.cpp>
 #endif
 #define SENDCONFIG 0
 #define REQUEST_CONFIG 0
 #define CAN0_INT 2                              // Set INT to pin 2
-MCP_CAN CAN0(10);                               // Set CS to pin 10
 
 class BMS{
 int NCH=8;                // [numero de celulas]

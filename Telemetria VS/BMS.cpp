@@ -1,9 +1,10 @@
 #ifndef BATTERYMANAGEMENTSYSTEM
 #define BATTERYMANAGEMENTSYSTEM
 #include <mcp_can.h>
-#include <SPI.cpp>
 #endif
 #include "BMS.h"
+
+extern MCP_CAN CANBMS(10);                               // Set CS to pin 10
 
 BMS::BMS(){
     can_intialize();
@@ -12,10 +13,10 @@ BMS::BMS(){
 
 void BMS::can_intialize(void){
     // Initialize MCP2515 running at 16MHz with a baudrate of 500kb/s and the masks and filters disabled.
-    if(CAN0.begin(MCP_ANY, CAN_125KBPS, MCP_8MHZ) == CAN_OK)
+    if(CANBMS.begin(MCP_ANY, CAN_125KBPS, MCP_8MHZ) == CAN_OK)
     Serial.println("MCP2515 Initialized Successfully!");
     else Serial.println("Error Initializing MCP2515...");
-    CAN0.setMode(MCP_NORMAL);                     // Set operation mode to normal so the MCP2515 sends acks to received data.
+    CANBMS.setMode(MCP_NORMAL);                     // Set operation mode to normal so the MCP2515 sends acks to received data.
     pinMode(CAN0_INT, INPUT);                            // Configuring pin for /INT input
     Serial.println("MCP2515 Library Receive Example...");
     delay(3000);
@@ -90,7 +91,7 @@ void BMS::requestConfig(void){
         if(count>=60)
         {
         byte data[8] = {0x00, 0x01, 0x02, 0xFF, 0x04, 0x05, 0x06, 0x07};
-        byte sndStat = CAN0.sendMsgBuf(0x11000000, 1, 8, data);
+        byte sndStat = CANBMS.sendMsgBuf(0x11000000, 1, 8, data);
         if(sndStat == CAN_OK)
         {
             Serial.println("Message Sent Successfully!");
@@ -117,7 +118,7 @@ int* BMS::readCan(){
 
     while(!digitalRead(CAN0_INT)){
         readcan++;
-        CAN0.readMsgBuf(&rxId, &len, rxBuf);      // Read data: len = data length, buf = data byte(s)
+        CANBMS.readMsgBuf(&rxId, &len, rxBuf);      // Read data: len = data length, buf = data byte(s)
             if((rxId & 0x1FFFFFFF)==0x186555F4){   
                 Vpack= (int)rxBuf[0]|((int)rxBuf[1]<<8);   
                 Current1= (int)rxBuf[2]|((int)rxBuf[3]<<8);
