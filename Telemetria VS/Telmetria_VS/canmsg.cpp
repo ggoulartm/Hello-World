@@ -65,8 +65,8 @@ class BMS_Generic: public CanMsg{
 		}
 		void getMsg(){
 			Vpack= data[0]|(data[1]<<8);   
-	    		Current1= data[2]|(data[3]<<8);
-       			Current2= data[4]|(data[5]<<8);
+	    		Current[0]= data[2]|(data[3]<<8);
+       			Current[1]= data[4]|(data[5]<<8);
 		        SoC= data[6]|(data[7]<<8);
 		}
 		void readMsg(int Buffer){

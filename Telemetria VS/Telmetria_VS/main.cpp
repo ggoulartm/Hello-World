@@ -3,10 +3,11 @@
 
 void main(){
     CanMsg CAN(4);
-    BMS LIFEPO4;
+    
     int Buff;
     int Buff1, Buff2;
 
+    BMS LIFEPO4(Buff);
     print("Seja bem-vindo ao Sistema de Telemetria da Equipe Vento Sul");
     print("Assim que a conexão estiver feita, iremos começar a plotar os dados");
 
