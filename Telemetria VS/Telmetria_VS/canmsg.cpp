@@ -19,7 +19,9 @@ class CanMsg{
 	int address;
 	list<int> history;
 	public:
-		CanMsg();
+		CanMsg(){
+			print("Can iniciado com sucesso");
+		}
 		CanMsg(int num){
 			size=num;
 		}
@@ -158,7 +160,6 @@ class BMS_Voltage: public CanMsg{
 			
 		}
 		BMS_Voltage();
-		~BMS_Voltage();
 		void getMsg(){
 			volt[0]= data[0]|(data[1]<<8);   
 	    		volt[1]= data[2]|(data[3]<<8);
