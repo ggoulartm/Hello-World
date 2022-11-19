@@ -14,19 +14,24 @@ void main(){
 
     //menu
     print("Menu:");
-    print("1) Conectar");
+    print("0) Conectar");
+    print("1) Visualizar Dados de Tensão");
     print("2) Visualizar Dados de Temperatura");
-    print("3) Visualizar Dados de Tensão");
     print("4) Visualizar Dados Genéricos");
     print("Digite o código correspondente a opção desejada:");
     unsigned char num;
     cin>>num;
     switch(num){
+        case 0: 
+                //wifi connect
+                break;
         case 1:
+                CAN.readMsg(&Buff1, &Buff2);
                 BMS_Voltage(Buff1, Buff2);
                 break;
         case 2:
-                BMS_Temperature(Buff1, Buff2);
+                CAN.readMsg(&Buff);
+                BMS_Temperature(Buff);
                 break;
         case 3:
                 BMS_Generic(Buff);
