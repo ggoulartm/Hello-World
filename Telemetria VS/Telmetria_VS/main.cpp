@@ -1,17 +1,17 @@
 #include <iostream>
 #include "canmsg.cpp"
 
-void main(){
+int main(){
     CanMsg CAN(4);
     
-    int Buff;
-    int Buff1, Buff2;
+    int Buff{};
+    int Buff1{}, Buff2{};
 
     BMS LIFEPO4(Buff);
     print("Seja bem-vindo ao Sistema de Telemetria da Equipe Vento Sul");
     print("Assim que a conexão estiver feita, iremos começar a plotar os dados");
 
-
+while(1){
     //menu
     print("Menu:");
     print("0) Conectar");
@@ -27,15 +27,17 @@ void main(){
                 break;
         case 1:
                 CAN.readMsg(&Buff1, &Buff2);
-                BMS_Voltage(Buff1, Buff2);
+                BMS_Voltage Volt(Buff1, Buff2);
                 break;
         case 2:
                 CAN.readMsg(&Buff);
-                BMS_Temperature(Buff);
+                BMS_Temperature Temp(Buff);
                 break;
         case 3:
-                BMS_Generic(Buff);
+                CAN.readMsg(&Buff);
+                BMS_Generic Generic(Buff);
                 break;
     }
-
+}
+return 0;
 }

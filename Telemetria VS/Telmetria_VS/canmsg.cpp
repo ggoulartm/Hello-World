@@ -4,7 +4,15 @@
 
 using namespace std;
 
+void print(string texto){
+	cout << texto << endl;
+}
 
+void printInt(int* data, int len){
+	for(int i=0; i<len; i++){
+		cout<<data[i]<<endl;
+	}
+}
 class CanMsg{
 	int size;
 	int datum[16];
@@ -149,6 +157,8 @@ class BMS_Voltage: public CanMsg{
 			getMsg();
 			
 		}
+		BMS_Voltage();
+		~BMS_Voltage();
 		void getMsg(){
 			volt[0]= data[0]|(data[1]<<8);   
 	    		volt[1]= data[2]|(data[3]<<8);
@@ -179,13 +189,5 @@ class BMS_Voltage: public CanMsg{
 		}
 };
 
-void print(string texto){
-	cout << texto << endl;
-}
 
-void printInt(int* data, int len){
-	for(int i=0; i<len; i++){
-		cout<<data[i]<<endl;
-	}
-}
 
