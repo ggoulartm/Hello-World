@@ -25,6 +25,12 @@ class CanMsg{
 		CanMsg(int num){
 			size=num;
 		}
+		int* getMsg(int* Buff, int len){
+			for(int i=0; i<len; i++){
+				Buff[i]=datum[i];
+			}
+			return Buff;
+		}
 		void setAddress(int num){
 			address=num;
 		}
@@ -39,12 +45,6 @@ class CanMsg{
 		void readMsg(int* Buffer1, int* Buffer2){
 			for(int i=0; i<8;i++) datum[i]=Buffer1[i];
 			for(int i=8; i<16;i++) datum[i]=Buffer2[i];
-		}
-		int* getMsg(int* Buff, int len){
-			for(int i=0; i<len; i++){
-				Buff[i]=datum[i];
-			}
-			return Buff;
 		}
 };
 

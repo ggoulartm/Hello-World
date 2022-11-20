@@ -33,7 +33,7 @@ while(1){
     print("0) Conectar");
     print("1) Visualizar Dados de Tensão");
     print("2) Visualizar Dados de Temperatura");
-    print("4) Visualizar Dados Genéricos");
+    print("3) Visualizar Dados Genéricos");
     print("Digite o código correspondente a opção desejada:");
     int num;
     cin>>num;
@@ -50,7 +50,7 @@ while(1){
                 displayTime();
                         this_thread::sleep_for(10s);
                         cout<<endl<<endl<<endl<<endl<<endl;
-                Volt.setHistory(&Buff1, &Buff2, 8);
+                Volt.saveMsg();
                 break;
         case 2:
                 Temp.readMsg(&Buff);
