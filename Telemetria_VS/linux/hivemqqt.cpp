@@ -30,6 +30,11 @@
  *    Frank Pagliughi - initial implementation and documentation
  *******************************************************************************/
 
+
+
+#include "/usr/local/bin/MQTTClient_subscribe"
+
+
 #include <iostream>
 #include <cstdlib>
 #include <string>
@@ -37,26 +42,10 @@
 #include <cctype>
 #include <thread>
 #include <chrono>
-#include "mqtt/async_client.h"
-#include "mqtt/async_client.cpp"
-#include "mqtt/client.cpp"
-#include "mqtt/connect_options.cpp"
-#include "mqtt/create_options.cpp"
-#include "mqtt/disconnect_options.cpp"
-#include "mqtt/iclient_persistence.cpp"
-#include "mqtt/message.cpp"
-#include "mqtt/properties.cpp"
-#include "mqtt/response_options.cpp"
-#include "mqtt/ssl_options.cpp"
-#include "mqtt/string_collection.cpp"
-#include "mqtt/subscribe_options.cpp"
-#include "mqtt/token.cpp"
-#include "mqtt/topic.cpp"
-#include "mqtt/will_options.cpp"
 
-const std::string SERVER_ADDRESS("e4d5a4758d51407596b46faed971e5e5.s2.eu.hivemq.cloud:8883");
-const std::string CLIENT_ID("MQTT_Emb_Linux");
-const std::string TOPIC("hello");
+const string SERVER_ADDRESS("e4d5a4758d51407596b46faed971e5e5.s2.eu.hivemq.cloud:8883");
+const string CLIENT_ID("MQTT_Emb_Linux");
+const string TOPIC("hello");
 
 const int	QOS = 1;
 const int	N_RETRY_ATTEMPTS = 5;
