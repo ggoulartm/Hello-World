@@ -3,7 +3,7 @@
 
 # Relative path conversion top directories.
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/home/ggmuller/ggmller/embeddedSYSTEMS/Telemetria_VS/linux/mqtt")
-set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/ggmuller/ggmller/embeddedSYSTEMS/Telemetria_VS/linux/mqtt")
+set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/ggmuller/ggmller/embeddedSYSTEMS/Telemetria_VS/linux/mqtt/build")
 
 # Force unix paths in dependencies.
 set(CMAKE_FORCE_UNIX_PATHS 1)

@@ -2,7 +2,7 @@
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/usr/local")
+  set(CMAKE_INSTALL_PREFIX "/home/ggmuller/ggmller/embeddedSYSTEMS/Telemetria_VS/linux/mqtt/build/_install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -80,5 +80,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/ggmuller/ggmller/embeddedSYSTEMS/Telemetria_VS/linux/mqtt/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/ggmuller/ggmller/embeddedSYSTEMS/Telemetria_VS/linux/mqtt/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

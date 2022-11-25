@@ -4,6 +4,7 @@
 #include <queue>
 #include <map>
 #include "canmsg.cpp"
+#include "mqqt.cpp"
 
 using namespace std;
 
@@ -58,10 +59,39 @@ cout<<"==============================//===================================="<<en
     print("2) Visualizar Dados de Temperatura");
     print("3) Visualizar Dados Genéricos");
     print("4) Imprimir log de Eventos");
+    print("5) Sair");
     print("Digite o código correspondente a opção desejada:");
 }
 
-int main(){
+int main(int argc, char* argv[]){
+
+	// A subscriber often wants the server to remember its messages when its
+	// disconnected. In that case, it needs a unique ClientID and a
+	// non-clean session.
+
+	mqtt::async_client cli(SERVER_ADDRESS, CLIENT_ID);
+
+	mqtt::connect_options connOpts("ggoulartm","YMCT4mVg5aUuyE6");
+	connOpts.set_clean_session(false);
+
+	// Install the callback(s) before connecting.
+	callback cb(cli, connOpts);
+	cli.set_callback(cb);
+
+	// Start the connection.
+	// When completed, the callback will subscribe to topic.
+
+	try {
+		std::cout << "Connecting to the MQTT server..." << std::flush;
+		cli.connect(connOpts, nullptr, cb);
+	}
+	catch (const mqtt::exception& exc) {
+		std::cerr << "\nERROR: Unable to connect to MQTT server: '"
+			<< SERVER_ADDRESS << "'" << exc << std::endl;
+		return 1;
+	}
+
+
         queue<string> events;
         queue<int> log;
         map<string,int> logEventos;
@@ -81,9 +111,9 @@ cout<<"==============================//===================================="<<en
     print("Seja bem-vindo ao Sistema de Telemetria da Equipe Vento Sul");
     print("Assim que a conexão estiver feita, iremos começar a plotar os dados");
 cout<<"==============================//===================================="<<endl;
-while(1){
+int num=0;
+while(num!=5){
     menu();
-    int num;
     cin>>num;
         switch(num){
         case 0: 
@@ -135,5 +165,23 @@ while(1){
     }
     logEventos.insert(make_pair(events.back(),log.back()));
 }
+
+	// Just block till user tells us to quit.
+
+	while (std::tolower(std::cin.get()) != 'q')
+		;
+
+	// Disconnect
+
+	try {
+		std::cout << "\nDisconnecting from the MQTT server..." << std::flush;
+		cli.disconnect()->wait();
+		std::cout << "OK" << std::endl;
+	}
+	catch (const mqtt::exception& exc) {
+		std::cerr << exc << std::endl;
+		return 1;
+	}
+
 return 0;
 }
