@@ -2,10 +2,16 @@
 #include <chrono>
 #include <thread>
 #include <queue>
+#include <map>
 #include "canmsg.cpp"
 
 using namespace std;
 
+struct {
+        string date;
+        string event;
+        int value;
+} Relatorio;
 
 template<typename T, typename Container = deque<T>>
 void print_log(queue<T,Container> queue){
@@ -13,10 +19,10 @@ void print_log(queue<T,Container> queue){
     cout << " Relatório : [";
     while(!queue.empty()){
         T item = queue.front();
-        std::cout << " " << item ;
+        cout << " " << item ;
         queue.pop();
     }
-    std::cout << "]" << std::endl;
+    cout << "]" << std::endl;
     
 }
 
@@ -58,6 +64,7 @@ cout<<"==============================//===================================="<<en
 int main(){
         queue<string> events;
         queue<int> log;
+        map<string,int> logEventos;
         int Buff{};
         int Buff1{}, Buff2{};
         CanMsg CAN(4);
@@ -126,6 +133,7 @@ while(1){
                 print_log(events);
                 break;
     }
+    logEventos.insert(make_pair(events.back(),log.back()));
 }
 return 0;
 }
