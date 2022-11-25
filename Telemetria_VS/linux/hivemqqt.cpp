@@ -32,16 +32,7 @@
 
 
 
-#include "/usr/local/bin/MQTTClient_subscribe"
-
-
-#include <iostream>
-#include <cstdlib>
-#include <string>
-#include <cstring>
-#include <cctype>
-#include <thread>
-#include <chrono>
+#include "libpaho-mqttpp3.so.1.2.0"
 
 const string SERVER_ADDRESS("e4d5a4758d51407596b46faed971e5e5.s2.eu.hivemq.cloud:8883");
 const string CLIENT_ID("MQTT_Emb_Linux");

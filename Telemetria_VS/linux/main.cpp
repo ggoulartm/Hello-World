@@ -3,8 +3,12 @@
 #include <thread>
 #include <queue>
 #include <map>
+#include <cstdlib>
+#include <string>
+#include <cstring>
+#include <cctype>
 #include "canmsg.cpp"
-#include "mqqt.cpp"
+#include "hivemqqt.cpp"
 
 using namespace std;
 
