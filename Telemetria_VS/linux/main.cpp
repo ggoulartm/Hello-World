@@ -26,6 +26,7 @@ cout<<"==============================//===================================="<<en
 
 int main(){
         Relatorio eventos;
+        Date hoje(returnTime()[0]);
         int Buff{};
         int Buff1{}, Buff2{};
         CanMsg CAN(4);
@@ -44,7 +45,6 @@ cout<<"==============================//===================================="<<en
 cout<<"==============================//===================================="<<endl;
 int num=0;
 while(num!=5){
-        Date hoje(returnTime()[0]);
         menu();
         cin>>num;
         switch(num){

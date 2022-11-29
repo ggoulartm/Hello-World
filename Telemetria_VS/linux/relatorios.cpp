@@ -71,13 +71,17 @@ class Hour{
     string hour;
     map<string,int> relo;
     public:
+        Hour(){
+            hour="teste-hora";
+            relo.insert({"teste",0});
+        }
         Hour(string h){
             cout<<"New Hour: "<<h<<endl;
             hour=h;
         }
         void setHour(string e, int l){
             cout<<"set Hour"<<endl;
-            relo.insert(make_pair(e,l));
+            relo.insert({e,l});
         }
         friend std::ostream& operator<<(std::ostream& os, const Hour& hr){
             cout<<"No horário "<<hr.hour<<" ocorreu o evento:"<<endl;
@@ -94,9 +98,19 @@ class Date{
     string date;
     vector<Hour> hour;
     public:
+        Date(){
+            date="teste";
+            hour={};
+        }
         Date(string d){
             cout<<"New Date: "<<d<<endl;
             date=d;
+        }
+        string getDate(){
+            return date;
+        }
+        bool compare(string d){
+            return d==date? true:false;
         }
         void setDate(string h, string e, int l){
             vector<Hour>::iterator itr=hour.begin();
@@ -127,7 +141,8 @@ class Date{
 };
 
 class Relatorio{
-    vector<Date> date;
+    queue<Date> date;
+    
     public:
         Relatorio(){
             cout<<"O Relatório de Eventos foi iniciado com sucesso"<<endl;
@@ -136,21 +151,20 @@ class Relatorio{
             cout<<"O Relatório de Eventos foi excluído com sucesso"<<endl;
         }
         void display(){
-            for(Date d: date){
                 cout<<"eventos ocorridos"<<endl;
-                cout<<d<<endl;
-            }
+                print_log(date);
         }
         void make(Date d){
             cout<<"iterator date"<<endl;
-            vector<Date>::iterator itr=date.begin();
-            while(itr!=date.end()){
-                if(date[itr-date.begin()]==d){
-                    break;
-                }
-                itr++;
+            int itr=0;
+            
+            if(date.back().compare(d.getDate())){
+                 swap(date.back(),d);
             }
-            cout<<"ok"<<endl;  
-            if(itr!=date.end()) date.push_back(d);
+            else{
+                date.push(d);
+            }
+    
+            cout<<"Make ok"<<endl;
         }
 };
