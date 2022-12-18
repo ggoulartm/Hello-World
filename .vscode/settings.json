@@ -5,6 +5,10 @@
         "vector": "cpp",
         "ostream": "cpp",
         "cstddef": "cpp",
-        "chrono": "cpp"
-    }
+        "chrono": "cpp",
+        "cstdlib": "cpp",
+        "queue": "cpp",
+        "iostream": "cpp"
+    },
+    "cmake.sourceDirectory": "${workspaceFolder}/Telemetria_VS/linux/mqtt"
 }
