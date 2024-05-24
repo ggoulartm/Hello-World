@@ -178,7 +178,7 @@ String CatchGPS() {
           Serial.print(F(":"));
         }
       }
-      return msg
+      return msg;
 }
 
 
