@@ -29,7 +29,7 @@ Client ID: Can be set to any unique identifier
 const char* ssid = "Eletro_europa";
 const char* password = "NoYas150632";
 const char* mqtt_server = "mqtt.tago.io";
-const int mqtt_port = 1883
+const int mqtt_port = 1883;
 const char* UserMQTT = "93670e80-8aa6-4191-8977-4ad8b278711e";
 const char* PasswrodMQTT = "93670e80-8aa6-4191-8977-4ad8b278711e";
 
@@ -134,48 +134,57 @@ void reconnect() {
   }
 }
 
+void printGPSTime() {
+            if (gps.date.isValid() && gps.time.isValid()){
+              Serial.print(F("- GPS date&time: "));
+              Serial.print(gps.date.year());
+              Serial.print(F("-"));
+              Serial.print(gps.date.month());
+              Serial.print(F("-"));
+              Serial.print(gps.date.day());
+              Serial.print(F(" "));
+              Serial.print(gps.time.hour());
+              Serial.print(F(":"));
+              Serial.print(gps.time.minute());
+              Serial.print(F(":"));
+              Serial.print(gps.time.second());
+              Serial.print(F(":"));
+            }
+}
+
+void printGPSAS() {
+            if (gps.altitude.isValid()) {         
+               Serial.print(F("- altitude:"));
+               Serial.println(gps.altitude.meters());
+            }
+            
+            if (gps.speed.isValid()) {         
+               Serial.print(F("- speed:"));
+               Serial.println(gps.speed.kmph());
+            }
+}
+
 String CatchGPS() {
       if (gpsSerial.available() > 0) {
-    if (gps.encode(gpsSerial.read())) {
-      double latdb = gps.location.lat();
-      double longdb = gps.location.lng();
-      Serial.println(latdb);
-      Serial.println(longdb);
-      String latStr = String(latdb,10);
-      String longStr = String(longdb,10);
-      String msg = "lat: "+latStr+", long: "+longStr;
-      
-      if (gps.location.isValid()){
-        Serial.print(F("- latitude:"));
-        Serial.println(gps.location.lat());
+        if (gps.encode(gpsSerial.read())) {
+          double latdb = gps.location.lat();
+          double longdb = gps.location.lng();
+          Serial.println(latdb);
+          Serial.println(longdb);
+          String latStr = String(latdb,10);
+          String longStr = String(longdb,10);
+          String msg = "lat: "+latStr+", long: "+longStr;
+          
+          if (gps.location.isValid()){
+            Serial.print(F("- latitude:"));
+            Serial.println(gps.location.lat());
+    
+            Serial.print(F("- longitude:"));
+            Serial.println(gps.location.lng());
 
-        Serial.print(F("- longitude:"));
-        Serial.println(gps.location.lng());
-
-        if (gps.altitude.isValid()) {         
-           Serial.print(F("- altitude:"));
-           Serial.println(gps.altitude.meters());
-        }
-        
-        if (gps.speed.isValid()) {         
-           Serial.print(F("- speed:"));
-           Serial.println(gps.speed.kmph());
-        }
-
-        if (gps.date.isValid() && gps.time.isValid()){
-          Serial.print(F("- GPS date&time: "));
-          Serial.print(gps.date.year());
-          Serial.print(F("-"));
-          Serial.print(gps.date.month());
-          Serial.print(F("-"));
-          Serial.print(gps.date.day());
-          Serial.print(F(" "));
-          Serial.print(gps.time.hour());
-          Serial.print(F(":"));
-          Serial.print(gps.time.minute());
-          Serial.print(F(":"));
-          Serial.print(gps.time.second());
-          Serial.print(F(":"));
+            printGPSAS();
+            printGPSTime();
+         }
         }
       }
       return msg;
@@ -219,12 +228,13 @@ void setup() {
 }
 
 void loop() {
-
-    String msg = CatchGPS();
+  char* msg;
+  snprintf(msg,100,"lat: %.10f, long: %.10f",gps.location.lat(),gps.location.lng());
 
   if (!client->connected()) {
     reconnect();
   }
+  
   client->loop();
     Serial.print("Publish message: ");
     Serial.println(msg);
