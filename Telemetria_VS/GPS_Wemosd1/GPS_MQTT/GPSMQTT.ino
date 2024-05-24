@@ -229,6 +229,4 @@ void loop() {
     Serial.print("Publish message: ");
     Serial.println(msg);
     client->publish("testTopic", msg);
-    
-  }
 }
