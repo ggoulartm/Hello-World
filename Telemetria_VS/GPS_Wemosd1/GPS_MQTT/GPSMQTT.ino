@@ -118,7 +118,7 @@ void reconnect() {
     String clientId = "ESP8266Client - MyClient";
     // Attempt to connect
     // Insert your password
-    if (client->connect(clientId.c_str(), "ggoulartm", "YMCT4mVg5aUuyE6")) {
+    if (client->connect(clientId.c_str(), UserMQTT, PasswrodMQTT)) {
       Serial.println("connected");
       // Once connected, publish an announcement…
       client->publish("testTopic", "hello world");
