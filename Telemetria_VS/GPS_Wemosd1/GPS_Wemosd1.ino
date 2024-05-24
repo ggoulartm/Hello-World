@@ -26,7 +26,6 @@ void loop() {
       String latStr = String(latdb,10);
       String longStr = String(longdb,10);
       String msg = "lat: "+latStr+", long: "+longStr;
-      Serial.println(msg);
       
       if (gps.location.isValid()){
         Serial.print(F("- latitude:"));

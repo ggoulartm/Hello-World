@@ -5,14 +5,23 @@
 #include <FS.h>
 #include <LittleFS.h>
 #include <CertStoreBearSSL.h>
-#include <BMS.h>
 
-BMS bms;
+/*
+Host: mqtt.tago.io
+TCP/IP port: 1883
+TCP/IP port over SSL: 8883
+Username: Token
+Password: <Your_Device-Token> (Replace with your actual device token)
+Client ID: Can be set to any unique identifier 
+*/
 
 // Update these with values suitable for your network.
 const char* ssid = "Eletro_europa";
 const char* password = "NoYas150632";
-const char* mqtt_server = "e4d5a4758d51407596b46faed971e5e5.s2.eu.hivemq.cloud";
+const char* mqtt_server = "mqtt.tago.io";
+const int mqtt_port = "1883"
+const char* UserMQTT = "93670e80-8aa6-4191-8977-4ad8b278711e";
+const char* PasswrodMQTT = "93670e80-8aa6-4191-8977-4ad8b278711e";
 
 // A single, global CertStore which can be used by all connections.
 // Needs to stay live the entire time any of the WiFiClientBearSSLs
@@ -150,8 +159,7 @@ void setup() {
 }
 
 void loop() {
-  bms.requestConfig();
-  int* canRead = {bms.readCan()};
+
 
   if (!client->connected()) {
     reconnect();
