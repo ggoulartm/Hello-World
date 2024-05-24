@@ -29,7 +29,7 @@ Client ID: Can be set to any unique identifier
 const char* ssid = "Eletro_europa";
 const char* password = "NoYas150632";
 const char* mqtt_server = "mqtt.tago.io";
-const int mqtt_port = "1883"
+const int mqtt_port = 1883
 const char* UserMQTT = "93670e80-8aa6-4191-8977-4ad8b278711e";
 const char* PasswrodMQTT = "93670e80-8aa6-4191-8977-4ad8b278711e";
 
