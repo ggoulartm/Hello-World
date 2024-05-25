@@ -121,9 +121,9 @@ void reconnect() {
     if (client->connect(clientId.c_str(), UserMQTT, PasswrodMQTT)) {
       Serial.println("connected");
       // Once connected, publish an announcement…
-      client->publish("testTopic", "hello world");
+      client->publish("KeepAlive", "ACRDA");
       // … and resubscribe
-      client->subscribe("testTopic");
+      client->subscribe("RemoteServer");
     } else {
       Serial.print("failed, rc = ");
       Serial.print(client->state());
@@ -192,5 +192,20 @@ void loop() {
     Serial.print("Publish message: ");
     Serial.println(msg);
     client->publish("testTopic", msg); 
+  }
+  else {
+      if (millis() > 30000 && gps.charsProcessed() < 10) {
+        Serial.println(F("No GPS data received"));
+        Serial.println("Sending NOT Receiving");
+        char msg[100];
+        snprintf(msg,100,"No data from GPS");   
+        if (!client->connected()) {
+          Serial.println("Reconnecting");
+          reconnect();
+        }
+        client->publish("Problem", msg); 
+      } else if (millis() > 30000) {
+          reconnect();
+      }
   }
 }
