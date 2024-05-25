@@ -134,62 +134,6 @@ void reconnect() {
   }
 }
 
-void printGPSTime() {
-            if (gps.date.isValid() && gps.time.isValid()){
-              Serial.print(F("- GPS date&time: "));
-              Serial.print(gps.date.year());
-              Serial.print(F("-"));
-              Serial.print(gps.date.month());
-              Serial.print(F("-"));
-              Serial.print(gps.date.day());
-              Serial.print(F(" "));
-              Serial.print(gps.time.hour());
-              Serial.print(F(":"));
-              Serial.print(gps.time.minute());
-              Serial.print(F(":"));
-              Serial.print(gps.time.second());
-              Serial.print(F(":"));
-            }
-}
-
-void printGPSAS() {
-            if (gps.altitude.isValid()) {         
-               Serial.print(F("- altitude:"));
-               Serial.println(gps.altitude.meters());
-            }
-            
-            if (gps.speed.isValid()) {         
-               Serial.print(F("- speed:"));
-               Serial.println(gps.speed.kmph());
-            }
-}
-
-String CatchGPS() {
-      if (gpsSerial.available() > 0) {
-        if (gps.encode(gpsSerial.read())) {
-          double latdb = gps.location.lat();
-          double longdb = gps.location.lng();
-          Serial.println(latdb);
-          Serial.println(longdb);
-          String latStr = String(latdb,10);
-          String longStr = String(longdb,10);
-          String msg = "lat: "+latStr+", long: "+longStr;
-          
-          if (gps.location.isValid()){
-            Serial.print(F("- latitude:"));
-            Serial.println(gps.location.lat());
-    
-            Serial.print(F("- longitude:"));
-            Serial.println(gps.location.lng());
-
-            printGPSAS();
-            printGPSTime();
-         }
-        }
-      }
-      return msg;
-}
-
 
 void setup() {
   delay(500);
@@ -203,12 +147,13 @@ void setup() {
 
   LittleFS.begin();
   setup_wifi();
-  setDateTime();
+  setDateTime(); // SET DATE AND TIME FROM NTP SERVER
 
   pinMode(LED_BUILTIN, OUTPUT); // Initialize the LED_BUILTIN pin as an output
 
   // you can use the insecure mode, when you want to avoid the certificates
   //espclient->setInsecure();
+
 
   int numCerts = certStore.initCertStore(LittleFS, PSTR("/certs.idx"), PSTR("/certs.ar"));
   Serial.printf("Number of CA certs read: %d\n", numCerts);
@@ -217,26 +162,35 @@ void setup() {
     return; // Can't connect to anything w/o certs!
   }
 
+  
   BearSSL::WiFiClientSecure *bear = new BearSSL::WiFiClientSecure();
   // Integrate the cert store with this connection
   bear->setCertStore(&certStore);
 
+  Serial.println("Init MQTT Server");
   client = new PubSubClient(*bear);
 
+  client->setServer(mqtt_server, mqtt_port);
   client->setServer(mqtt_server, 8883);
+
+  Serial.println("Setting callback");
   client->setCallback(callback);
 }
 
 void loop() {
-  char* msg;
-  snprintf(msg,100,"lat: %.10f, long: %.10f",gps.location.lat(),gps.location.lng());
+  if (gpsSerial.available() > 0 && gps.encode(gpsSerial.read()) && gps.location.isValid()) {
+    char msg[100];
+   snprintf(msg,100,"lat: %.10f, long: %.10f",gps.location.lat(),gps.location.lng());
 
-  if (!client->connected()) {
-    reconnect();
-  }
+    Serial.println("is Client connected to MQTT?");
+    if (!client->connected()) {
+      Serial.println("Reconnecting");
+      reconnect();
+    }
   
-  client->loop();
+    client->loop();
     Serial.print("Publish message: ");
     Serial.println(msg);
-    client->publish("testTopic", msg);
+    client->publish("testTopic", msg); 
+  }
 }
