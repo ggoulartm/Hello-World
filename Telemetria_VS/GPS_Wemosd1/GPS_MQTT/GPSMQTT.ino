@@ -7,10 +7,14 @@
 #include <CertStoreBearSSL.h>
 #include <TinyGPS++.h>
 #include <SoftwareSerial.h>
+#include <ArduinoJson.h>
 
 // GPS Headers
-const int RX_PIN = 13, TX_PIN = 15;
+const int RX_PIN = 4, TX_PIN = 3;
 const uint32_t GPS_BAUD = 9600; // Default baud of NEO-6M is 9600
+
+// GPS Data
+double llat,llng;
 
 TinyGPSPlus gps; // The tinyGPS object
 SoftwareSerial gpsSerial(RX_PIN, TX_PIN);
@@ -29,7 +33,7 @@ Client ID: Can be set to any unique identifier
 const char* ssid = "Eletro_europa";
 const char* password = "NoYas150632";
 const char* mqtt_server = "mqtt.tago.io";
-const int mqtt_port = 1883;
+const int mqtt_port = 8883;
 const char* UserMQTT = "93670e80-8aa6-4191-8977-4ad8b278711e";
 const char* PasswrodMQTT = "93670e80-8aa6-4191-8977-4ad8b278711e";
 
@@ -112,7 +116,6 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
 
 void reconnect() {
-  // Loop until we’re reconnected
   while (!client->connected()) {
     Serial.print("Attempting MQTT connection…");
     String clientId = "ESP8266Client - MyClient";
@@ -151,10 +154,6 @@ void setup() {
 
   pinMode(LED_BUILTIN, OUTPUT); // Initialize the LED_BUILTIN pin as an output
 
-  // you can use the insecure mode, when you want to avoid the certificates
-  //espclient->setInsecure();
-
-
   int numCerts = certStore.initCertStore(LittleFS, PSTR("/certs.idx"), PSTR("/certs.ar"));
   Serial.printf("Number of CA certs read: %d\n", numCerts);
   if (numCerts == 0) {
@@ -167,45 +166,63 @@ void setup() {
   // Integrate the cert store with this connection
   bear->setCertStore(&certStore);
 
-  Serial.println("Init MQTT Server");
+  
   client = new PubSubClient(*bear);
-
   client->setServer(mqtt_server, mqtt_port);
-  client->setServer(mqtt_server, 8883);
-
-  Serial.println("Setting callback");
   client->setCallback(callback);
+  Serial.println("MQTT Server Started Successfully");
 }
 
 void loop() {
-  if (gpsSerial.available() > 0 && gps.encode(gpsSerial.read()) && gps.location.isValid()) {
-    char msg[100];
-   snprintf(msg,100,"lat: %.10f, long: %.10f",gps.location.lat(),gps.location.lng());
+  if (!client->connected()) {
+        Serial.println("Connecting to MQTT Server");
+        reconnect();
+  }
+  client->loop();
 
-    Serial.println("is Client connected to MQTT?");
-    if (!client->connected()) {
-      Serial.println("Reconnecting");
-      reconnect();
-    }
   
-    client->loop();
-    Serial.print("Publish message: ");
-    Serial.println(msg);
-    client->publish("testTopic", msg); 
+  while (gpsSerial.available() > 0) {
+   char gpsData = gpsSerial.read();
+   gps.encode(gpsData); 
+   delay(1);
   }
-  else {
-      if (millis() > 30000 && gps.charsProcessed() < 10) {
+  
+  if (millis() > 30000 && gps.charsProcessed() < 10) {
         Serial.println(F("No GPS data received"));
-        Serial.println("Sending NOT Receiving");
         char msg[100];
-        snprintf(msg,100,"No data from GPS");   
-        if (!client->connected()) {
-          Serial.println("Reconnecting");
-          reconnect();
-        }
+        snprintf(msg,100,"No data from GPS"); 
         client->publish("Problem", msg); 
-      } else if (millis() > 30000) {
-          reconnect();
-      }
   }
+
+  JsonDocument JSONencode;
+  
+    char latitude[14];
+    snprintf(latitude, 14, "%.10f",gps.location.lat());
+    
+    char longitude[14];
+    snprintf(longitude, 14, "%.10f",gps.location.lng());
+  
+  JSONencode["variable"]="location";
+  JSONencode["value"]="VentoSulDevice";
+  JSONencode["location"]["type"]="Point";
+  JSONencode["location"]["coordinates"][0]=longitude;
+  JSONencode["location"]["coordinates"][1]=latitude;
+
+  char JSONmessageBuffer[250];
+  serializeJson(JSONencode,JSONmessageBuffer);
+  
+    Serial.println(JSONmessageBuffer);
+  
+  if (gps.location.isValid() && llat != gps.location.lat() && llng != gps.location.lng()) {
+    Serial.println("Publishing message");
+    client->publish("GPS_Topic", JSONmessageBuffer); 
+    
+    llat=gps.location.lat();
+    llng=gps.location.lng();
+  }
+
+  
+    digitalWrite(LED_BUILTIN, HIGH);// Turn the LED off by making the voltage HIGH
+    delay(1000);
+    digitalWrite(LED_BUILTIN, LOW); 
 }
