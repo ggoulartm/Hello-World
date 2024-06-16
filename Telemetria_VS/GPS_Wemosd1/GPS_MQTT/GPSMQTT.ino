@@ -15,27 +15,19 @@ const uint32_t GPS_BAUD = 9600; // Default baud of NEO-6M is 9600
 
 // GPS Data
 double llat,llng;
+time_t Now;
 
 TinyGPSPlus gps; // The tinyGPS object
 SoftwareSerial gpsSerial(RX_PIN, TX_PIN);
 
 
-/* MQTT Headers
-Host: mqtt.tago.io
-TCP/IP port: 1883
-TCP/IP port over SSL: 8883
-Username: Token
-Password: <Your_Device-Token> (Replace with your actual device token)
-Client ID: Can be set to any unique identifier 
-*/
-
 // Update these with values suitable for your network.
 const char* ssid = "Eletro_europa";
 const char* password = "NoYas150632";
-const char* mqtt_server = "mqtt.tago.io";
+const char* mqtt_server = "ClusterLink.cloud/mqtt";
 const int mqtt_port = 8883;
-const char* UserMQTT = "93670e80-8aa6-4191-8977-4ad8b278711e";
-const char* PasswrodMQTT = "93670e80-8aa6-4191-8977-4ad8b278711e";
+const char* UserMQTT = "YourUser";
+const char* PasswrodMQTT = "YourPassword";
 
 // A single, global CertStore which can be used by all connections.
 // Needs to stay live the entire time any of the WiFiClientBearSSLs
@@ -79,16 +71,16 @@ void setDateTime() {
   configTime(TZ_Europe_Berlin, "pool.ntp.org", "time.nist.gov");
 
   Serial.print("Waiting for NTP time sync: ");
-  time_t now = time(nullptr);
-  while (now < 8 * 3600 * 2) {
+  time_t nowe = time(nullptr);
+  while (nowe < 8 * 3600 * 2) {
     delay(100);
     Serial.print(".");
-    now = time(nullptr);
+    nowe = time(nullptr);
   }
   Serial.println();
 
   struct tm timeinfo;
-  gmtime_r(&now, &timeinfo);
+  gmtime_r(&nowe, &timeinfo);
   Serial.printf("%s %s", tzname[0], asctime(&timeinfo));
 }
 
@@ -118,13 +110,13 @@ void callback(char* topic, byte* payload, unsigned int length) {
 void reconnect() {
   while (!client->connected()) {
     Serial.print("Attempting MQTT connection…");
-    String clientId = "ESP8266Client - MyClient";
+    String clientId = "8a98b30641db4c189db544da86fc63e0";
     // Attempt to connect
     // Insert your password
     if (client->connect(clientId.c_str(), UserMQTT, PasswrodMQTT)) {
       Serial.println("connected");
       // Once connected, publish an announcement…
-      client->publish("KeepAlive", "ACRDA");
+      client->publish("test", "ACRDA");
       // … and resubscribe
       client->subscribe("RemoteServer");
     } else {
@@ -140,7 +132,6 @@ void reconnect() {
 
 void setup() {
   delay(500);
-  
   // When opening the Serial Monitor, select 9600 Baud
   Serial.begin(9600);
    //GPS Begin
@@ -171,6 +162,7 @@ void setup() {
   client->setServer(mqtt_server, mqtt_port);
   client->setCallback(callback);
   Serial.println("MQTT Server Started Successfully");
+  Now=millis();
 }
 
 void loop() {
@@ -187,7 +179,7 @@ void loop() {
    delay(1);
   }
   
-  if (millis() > 30000 && gps.charsProcessed() < 10) {
+  if (millis() > 5000 && gps.charsProcessed() < 10) {
         Serial.println(F("No GPS data received"));
         char msg[100];
         snprintf(msg,100,"No data from GPS"); 
@@ -208,17 +200,19 @@ void loop() {
   JSONencode["location"]["coordinates"][0]=longitude;
   JSONencode["location"]["coordinates"][1]=latitude;
 
-  char JSONmessageBuffer[250];
+  String JSONmessageBuffer;
   serializeJson(JSONencode,JSONmessageBuffer);
-  
-    Serial.println(JSONmessageBuffer);
+   Serial.println(JSONmessageBuffer);
   
   if (gps.location.isValid() && llat != gps.location.lat() && llng != gps.location.lng()) {
     Serial.println("Publishing message");
-    client->publish("GPS_Topic", JSONmessageBuffer); 
+    char Buffer[250];
+    JSONmessageBuffer.toCharArray(Buffer,250);
+    client->publish("GPS_Topic", Buffer); 
     
     llat=gps.location.lat();
     llng=gps.location.lng();
+    Now=millis();
   }
 
   
